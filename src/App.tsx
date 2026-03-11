@@ -1,46 +1,80 @@
 import './App.css'
 import { useMemo, useState } from 'react'
+import { Github, Linkedin, Link as LinkIcon, MapPin } from 'lucide-react'
 import { loadDeveloperProfiles, type DeveloperProfile } from './lib/developers'
 
 const { profiles: allProfiles, errors: loadErrors } = loadDeveloperProfiles()
 
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  const chars = parts.slice(0, 2).map((p) => p[0]?.toUpperCase()).filter(Boolean)
+  return chars.join('') || '?'
+}
+
 function ProfileCard({ profile }: { profile: DeveloperProfile }) {
-  const { name, role, country, skills, github, linkedin, portfolio } = profile
+  const { name, role, avatar, github, linkedin, portfolio, country } = profile
+  const [avatarLoadFailed, setAvatarLoadFailed] = useState(false)
+
+  const showImage = avatar && !avatarLoadFailed
 
   return (
-    <article className="card">
-      <div className="cardHeader">
-        <div>
-          <h3 className="name">{name}</h3>
-          <p className="meta">
-            {role} · {country}
-          </p>
+    <article className="devCard">
+      <div className="devCardInner">
+        <div className="devAvatarWrap">
+          {showImage ? (
+            <img
+              className="devAvatar"
+              src={avatar}
+              alt={name}
+              loading="lazy"
+              onError={() => setAvatarLoadFailed(true)}
+            />
+          ) : (
+            <div className="devAvatarFallback" aria-hidden="true">
+              {initials(name)}
+            </div>
+          )}
         </div>
-        <div className="links">
+
+        <h3 className="devName">{name}</h3>
+        <p className="devRole">{role}</p>
+
+        {country ? (
+          <p className="devCountry">
+            <MapPin size={14} aria-hidden />
+            {country}
+          </p>
+        ) : null}
+
+        <div className="devSocial" aria-label="Social links">
           {github ? (
-            <a href={github} target="_blank" rel="noreferrer">
-              GitHub
+            <a className="devSocialLink" href={github} target="_blank" rel="noreferrer" aria-label="GitHub">
+              <Github size={22} />
             </a>
           ) : null}
           {linkedin ? (
-            <a href={linkedin} target="_blank" rel="noreferrer">
-              LinkedIn
+            <a
+              className="devSocialLink"
+              href={linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={22} />
             </a>
           ) : null}
           {portfolio ? (
-            <a href={portfolio} target="_blank" rel="noreferrer">
-              Portfolio
+            <a
+              className="devSocialLink"
+              href={portfolio}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Portfolio"
+            >
+              <LinkIcon size={22} />
             </a>
           ) : null}
         </div>
-      </div>
-
-      <div className="tags">
-        {skills.slice(0, 12).map((s) => (
-          <span key={s} className="tag">
-            {s}
-          </span>
-        ))}
       </div>
     </article>
   )

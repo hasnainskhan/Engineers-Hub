@@ -1,6 +1,7 @@
 export type DeveloperProfile = {
   name: string
   role: string
+  avatar?: string
   github?: string
   linkedin?: string
   portfolio?: string
@@ -23,6 +24,8 @@ function asNonEmptyString(value: unknown): string | null {
 function asOptionalUrl(value: unknown): string | undefined {
   const str = asNonEmptyString(value)
   if (!str) return undefined
+  // Accept path-only values (e.g. "/hasnain.png" from public folder)
+  if (str.startsWith('/') || str.startsWith('./')) return str
   try {
     // eslint-disable-next-line no-new
     new URL(str)
@@ -60,6 +63,7 @@ function parseDeveloperProfile(raw: unknown, source: string): ParseResult {
       role,
       country,
       skills,
+      avatar: asOptionalUrl(raw.avatar),
       github: asOptionalUrl(raw.github),
       linkedin: asOptionalUrl(raw.linkedin),
       portfolio: asOptionalUrl(raw.portfolio),

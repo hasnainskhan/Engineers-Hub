@@ -1,0 +1,9 @@
+{
+  "name": "John Doe",
+  "role": "Full Stack Developer",
+  "github": "https://github.com/johndoe",
+  "linkedin": "https://linkedin.com/in/johndoe",
+  "portfolio": "https://johndoe.dev",
+  "skills": ["JavaScript", "React", "Node.js", "PostgreSQL"],
+  "country": "United States"
+}

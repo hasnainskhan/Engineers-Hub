@@ -1,0 +1,10 @@
+{
+    "name": "Ada Lovelace1",
+    "role": "Software Engineer",
+    "avatar": "/hasnain.png",
+    "github": "https://github.com/example",
+    "linkedin": "https://linkedin.com/in/example",
+    "portfolio": "https://example.com",
+    "skills": ["TypeScript", "React", "Node.js", "Docker"],
+    "country": "United Kingdom"
+  }

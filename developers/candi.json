@@ -1,0 +1,9 @@
+{
+    "name": "CANDI",
+    "role": "Software Engineer",
+    "github": "https://github.com/example",
+    "linkedin": "https://linkedin.com/in/example",
+    "portfolio": "https://example.com",
+    "skills": ["TypeScript", "React", "Node.js", "Docker"],
+    "country": "United Kingdom"
+  }
